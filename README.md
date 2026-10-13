@@ -1,5 +1,9 @@
 # n8n-nodes-spicrawl
 
+[![smithery badge](https://smithery.ai/badge/spicrawl/web-scraper)](https://smithery.ai/servers/spicrawl/web-scraper)
+
+Also available as an MCP server: [Smithery](https://smithery.ai/servers/spicrawl/web-scraper) · [MCP Registry](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.OfficialSpicrawl/mcp)
+
 This is an n8n community node. It lets you use [Spicrawl](https://spicrawl.com) in your n8n workflows.
 
 Spicrawl is a web scraping API. It fetches any URL and returns it as clean markdown, HTML, text, a PDF or structured JSON. It renders JavaScript when a page needs it, and runs large URL lists as batch jobs.

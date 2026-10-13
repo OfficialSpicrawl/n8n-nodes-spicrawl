@@ -1,0 +1,45 @@
+# Install, lint, build and test on every push and pull request, plus two
+# repo-wide leak checks: no real-looking Spicrawl API key, and no internal
+# engine name (customers see the rendering tiers fetch, js and browser only).
+
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: install
+        run: npm ci --no-audit --no-fund
+      - name: lint
+        run: npm run lint
+      - name: build
+        run: npm run build
+      - name: test
+        run: npm test
+      - name: no real-looking API keys
+        run: |
+          if git grep -nIE 'spicrawl_(live|test)_[a-z0-9]{20,}' -- . ; then
+            echo "::error::a file contains something that looks like a real Spicrawl API key"
+            exit 1
+          fi
+      - name: no internal engine names
+        run: |
+          words='(^|[^a-z])moli([^a-z]|$)|chromium|chrome|camoufox|obscura|browserless|headful|headless|playwright|puppeteer'
+          if git grep -nIiE "$words" -- . ':!package-lock.json' ':!.github/workflows/ci.yml'; then
+            echo "::error::a tracked file names an internal engine; say fetch, js (JavaScript rendering) or browser (a full browser) instead"
+            exit 1
+          fi

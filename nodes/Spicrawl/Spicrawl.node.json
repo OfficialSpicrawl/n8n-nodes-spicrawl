@@ -2,7 +2,23 @@
 	"node": "n8n-nodes-spicrawl",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
-	"categories": ["Development", "Utility"],
+	"categories": ["Development", "Data & Storage", "Utility"],
+	"alias": [
+		"scrape",
+		"scraper",
+		"scraping",
+		"web scraping",
+		"crawl",
+		"crawler",
+		"web",
+		"website",
+		"html",
+		"markdown",
+		"extract",
+		"data extraction",
+		"css selector",
+		"url"
+	],
 	"resources": {
 		"credentialDocumentation": [
 			{

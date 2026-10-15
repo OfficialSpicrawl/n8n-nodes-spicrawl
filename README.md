@@ -1,8 +1,8 @@
-# n8n-nodes-spicrawl
+# n8n-nodes-spicrawl: web scraping node for n8n
 
 [![smithery badge](https://smithery.ai/badge/spicrawl/web-scraper)](https://smithery.ai/servers/spicrawl/web-scraper)
 
-Also available as an MCP server: [Smithery](https://smithery.ai/servers/spicrawl/web-scraper) · [MCP Registry](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.OfficialSpicrawl/mcp)
+**How do I scrape a website in n8n?** Install the community node `n8n-nodes-spicrawl`, add the **Spicrawl** node to a workflow, paste a [Spicrawl](https://spicrawl.com) API key into its credential, enter the page URL and run the node. It returns the page as Markdown, HTML, text, a PDF or JSON. Set **Rendering** to JavaScript or Auto for pages built by JavaScript, add **Extract Fields (JSON)** to pull named fields out with CSS selectors, or use **Batch Scrape** to scrape a list of URLs as one job. An **AI Agent** node can call it as a tool. The full guide is at [docs.spicrawl.com/agents/n8n](https://docs.spicrawl.com/agents/n8n).
 
 This is an n8n community node. It lets you use [Spicrawl](https://spicrawl.com) in your n8n workflows.
 
@@ -10,15 +10,36 @@ Spicrawl is a web scraping API. It fetches any URL and returns it as clean markd
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
+Also available as an MCP server: [Smithery](https://smithery.ai/servers/spicrawl/web-scraper) · [MCP Registry](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.OfficialSpicrawl/mcp)
+
+[Quick start](#quick-start)
+[Use cases](#use-cases)
 [Installation](#installation)
 [Operations](#operations)
 [Credentials](#credentials)
 [Usage](#usage)
 [Examples](#examples)
+[FAQ](#faq)
 [Troubleshooting](#troubleshooting)
 [Compatibility](#compatibility)
 [Resources](#resources)
 [Version history](#version-history)
+
+## Quick start
+
+1. **Install the node.** On self-hosted n8n, open **Settings > Community Nodes > Install**, enter `n8n-nodes-spicrawl` and accept the prompt. n8n Cloud lists only community nodes that n8n has verified. More in [Installation](#installation).
+2. **Add your API key.** Create a key at [app.spicrawl.com](https://app.spicrawl.com) with the `scrape` scope, then add a **Spicrawl API** credential in n8n and paste the key into **API Key**.
+3. **Scrape a page.** Add a **Spicrawl** node, set **URL** to the page, leave **Response Format** on Markdown and select **Execute step**. The page is in the `content` field of the output item.
+
+For a ready-made workflow, import an example from [Examples](#examples).
+
+## Use cases
+
+- **Feed web pages to an AI model or a RAG pipeline.** Markdown output is much smaller than HTML, so it costs fewer tokens to send to a model.
+- **Give an AI Agent a web page reader.** The node can be used as an AI Agent tool, so the agent supplies the URL and reads the page itself.
+- **Extract fields from product, listing or article pages.** Map field names to CSS selectors and get structured JSON back under `data`. Run it on a schedule to track changes over time.
+- **Scrape a list of URLs from a spreadsheet, feed or database.** Batch Scrape takes up to 10,000 URLs from a previous node and returns one item per URL.
+- **Archive a page.** Save a page as HTML, a PDF or a screenshot and send it to Google Drive, email or a file.
 
 ## Installation
 
@@ -255,6 +276,28 @@ To scrape URLs that come from a previous node (a Google Sheet, an RSS feed, a da
 
 Add a Spicrawl node to an **AI Agent** node's tools. The agent fills in the URL and picks the options it needs. Keep Response Format on Markdown, and set **Max Cost (Credits)** so one tool call can never spend more than you intend.
 
+## FAQ
+
+### Can it scrape JavaScript-rendered websites?
+
+Yes. Set **Rendering** to **JavaScript** to render the page before it is returned, and add **Wait For Selector** or **Wait After Load (Ms)** when content appears late. **Auto** starts with a plain fetch and moves to JavaScript rendering only if the page needs it, and you pay for the tier that worked. A plain fetch costs 1 credit and JavaScript rendering costs 3, so use Fetch for server-rendered pages. Some protected sites refuse automated requests; the **Proxy URL** option sends the request through your own proxy. Always check `status` in the output, because a blocked page is still a successful node run.
+
+### Can I use it as an AI Agent tool?
+
+Yes. The node is marked as usable as a tool, so an **AI Agent** node can call both Scrape URL and Batch Scrape. On self-hosted n8n, set the environment variable `N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true` and restart n8n, otherwise n8n does not offer community nodes as agent tools. Keep Response Format on Markdown and set **Max Cost (Credits)** so one tool call cannot spend more than you intend. See [Use Spicrawl as an AI Agent tool](https://docs.spicrawl.com/agents/n8n#use-spicrawl-as-an-ai-agent-tool).
+
+### Is there a free tier?
+
+Yes. Every Spicrawl organization gets 1,000 free credits per month. A plain fetch costs 1 credit and JavaScript rendering costs 3, so a month covers up to 1,000 plain pages or 333 JavaScript-rendered pages. A request that fails costs nothing. See [Credits](https://docs.spicrawl.com/credits) for the current price list.
+
+### How do I extract specific fields from a page?
+
+Add the option **Extract Fields (JSON)** to Scrape URL and give it a map of field name to CSS selector, for example `{"title": "h1", "price": ".price"}`. The values come back under `data`, and `empty_fields` lists every selector that matched nothing, which is the first sign a site changed its markup. Extraction costs no extra credits. For pages built by JavaScript, set Rendering to JavaScript and add **Wait For Selector**. See [Extract product fields from a JavaScript page](#extract-product-fields-from-a-javascript-page).
+
+### How is this different from the HTTP Request node?
+
+The HTTP Request node returns the raw response and does not run JavaScript. The Spicrawl node converts the page to Markdown, text or extracted fields, can render JavaScript, and runs a list of URLs as one batch job.
+
 ## Troubleshooting
 
 | Error code | What it means | What to do |
@@ -273,6 +316,7 @@ Developed against n8n 2.x with `n8n-workflow` 2.42 (`n8nNodesApiVersion` 1). The
 
 ## Resources
 
+- [Spicrawl in n8n: the full guide](https://docs.spicrawl.com/agents/n8n)
 - [Source code and issues](https://github.com/OfficialSpicrawl/n8n-nodes-spicrawl)
 - [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
 - [Spicrawl documentation](https://docs.spicrawl.com)
@@ -284,6 +328,7 @@ Developed against n8n 2.x with `n8n-workflow` 2.42 (`n8nNodesApiVersion` 1). The
 
 See [CHANGELOG.md](CHANGELOG.md).
 
+- **0.1.2**: Documentation and package metadata for discoverability. No code change.
 - **0.1.1**: Source moved to its own repository, with the package at the repository root. No code change.
 - **0.1.0**: Scrape URL and Batch Scrape.
 

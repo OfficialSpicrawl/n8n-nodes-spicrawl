@@ -1,17 +1,26 @@
 {
 	"name": "n8n-nodes-spicrawl",
-	"version": "0.1.1",
-	"description": "n8n community node for Spicrawl: scrape any URL to markdown, HTML, text, PDF or structured JSON, and run batch scrape jobs.",
+	"version": "0.1.2",
+	"description": "Spicrawl n8n node for web scraping: scrape websites to Markdown, HTML or JSON, extract data with CSS selectors, batch-scrape URLs and use it as an AI Agent tool",
 	"license": "MIT",
 	"homepage": "https://github.com/OfficialSpicrawl/n8n-nodes-spicrawl#readme",
 	"keywords": [
 		"n8n-community-node-package",
 		"n8n",
+		"n8n-node",
 		"spicrawl",
-		"web scraping",
+		"web-scraping",
+		"web-scraper",
 		"scraper",
+		"crawler",
 		"markdown",
-		"crawler"
+		"data-extraction",
+		"javascript-rendering",
+		"ai-agent",
+		"llm",
+		"rag",
+		"automation",
+		"workflow"
 	],
 	"author": {
 		"name": "Spicrawl",

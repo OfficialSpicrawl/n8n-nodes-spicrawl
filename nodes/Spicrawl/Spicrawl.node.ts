@@ -17,7 +17,8 @@ export class Spicrawl implements INodeType {
 		group: ['input'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] === "batch" ? "Batch Scrape" : "Scrape URL"}}',
-		description: 'Scrape web pages to markdown, HTML, text, PDF or structured data with Spicrawl',
+		description:
+			'Scrape websites to Markdown, HTML or JSON, extract data with CSS selectors, batch-scrape URLs',
 		defaults: {
 			name: 'Spicrawl',
 		},

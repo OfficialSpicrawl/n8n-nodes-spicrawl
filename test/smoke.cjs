@@ -9,6 +9,11 @@ const { SpicrawlApi } = require(path.join(PROJ, 'dist/credentials/SpicrawlApi.cr
 
 const KEY = 'spicrawl_test_mock';
 
+// The codex `node` must be <package>.<node name>, or n8n's verification rejects it.
+const codex = require(path.join(PROJ, 'nodes/Spicrawl/Spicrawl.node.json'));
+const expectedNode = require(path.join(PROJ, 'package.json')).name + '.' + new Spicrawl().description.name;
+if (codex.node !== expectedNode) throw new Error(`codex node is ${codex.node}, want ${expectedNode}`);
+
 function makeCtx(params, inputs, base, log) {
 	return {
 		getNode: () => ({ name: 'Spicrawl', type: 'spicrawl', typeVersion: 1 }),

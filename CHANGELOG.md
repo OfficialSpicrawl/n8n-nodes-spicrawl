@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+- Node codex file: `node` is now the fully-qualified node identifier `n8n-nodes-spicrawl.spicrawl` (`<package>.<node name>`), as n8n's verification review requires. It was the bare package name. No code change.
+
 ## 0.1.2
 
 - Discoverability, no code change. `package.json` description and keywords now say what the node does (web scraping, Markdown, data extraction, AI Agent tool).

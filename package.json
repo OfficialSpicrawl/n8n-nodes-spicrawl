@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-spicrawl",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"description": "Spicrawl n8n node for web scraping: scrape websites to Markdown, HTML or JSON, extract data with CSS selectors, batch-scrape URLs and use it as an AI Agent tool",
 	"license": "MIT",
 	"homepage": "https://github.com/OfficialSpicrawl/n8n-nodes-spicrawl#readme",

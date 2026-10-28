@@ -27,7 +27,7 @@ Also available as an MCP server: [Smithery](https://smithery.ai/servers/spicrawl
 
 ## Quick start
 
-1. **Install the node.** On self-hosted n8n, open **Settings > Community Nodes > Install**, enter `n8n-nodes-spicrawl` and accept the prompt. n8n Cloud lists only community nodes that n8n has verified. More in [Installation](#installation).
+1. **Install the node.** The node is verified by n8n. In the node panel, search `Spicrawl` and select **Install node**, on n8n Cloud or self-hosted. On self-hosted n8n you can also open **Settings > Community Nodes > Install**, enter `n8n-nodes-spicrawl` and accept the prompt. More in [Installation](#installation).
 2. **Add your API key.** Create a key at [app.spicrawl.com](https://app.spicrawl.com) with the `scrape` scope, then add a **Spicrawl API** credential in n8n and paste the key into **API Key**.
 3. **Scrape a page.** Add a **Spicrawl** node, set **URL** to the page, leave **Response Format** on Markdown and select **Execute step**. The page is in the `content` field of the output item.
 
@@ -43,7 +43,12 @@ For a ready-made workflow, import an example from [Examples](#examples).
 
 ## Installation
 
-Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation, and install the package `n8n-nodes-spicrawl`.
+The node is verified by n8n, so it installs from inside n8n on both n8n Cloud and self-hosted n8n:
+
+1. In a workflow, open the node panel and search for `Spicrawl`.
+2. Select the result with the **Verified** badge (actions **Scrape page** and **Batch scrape pages**), then select **Install node**.
+
+On self-hosted n8n you can instead install the package by name. As the instance owner, open **Settings > Community Nodes > Install**, enter `n8n-nodes-spicrawl` and accept the prompt. See the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
 ## Operations
 
